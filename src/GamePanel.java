@@ -31,10 +31,12 @@ public class GamePanel extends JPanel implements ActionListener {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+
 	}
 	@Override
 	public void paintComponent(Graphics g) {
 	g.drawImage(bg1, 0, 0, Gungailonline.WIDTH, Gungailonline.HEIGHT, null);
+	object.draw(g);
 	}
 	@Override
 	public void actionPerformed(ActionEvent e) {
