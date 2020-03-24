@@ -22,6 +22,7 @@ public class ObjectManager {
 	}
 	ArrayList<Buildings> backg;
 	void draw(Graphics g) {
+		
 		for (int i = 0; i < backg.size(); i++) {
 			backg.get(i).draw(g);
 		}

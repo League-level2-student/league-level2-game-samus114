@@ -22,9 +22,10 @@ public class GamePanel extends JPanel implements ActionListener, MouseListener {
 	Font titleFont = new Font("Arial", Font.PLAIN, 48);
 	Font subFont = new Font("Arial", Font.PLAIN, 26);
 	BufferedImage bg1;
-
+Enemy enemy;
 	GamePanel() {
 		this.sniper = new Sniper(350, 40, 80, 40);
+		this.enemy = new Enemy(700, 80, 160, 80);
 		frameDraw = new Timer(1000 / 60, this);
 		frameDraw.start();
 		object = new ObjectManager(sniper);
@@ -41,6 +42,7 @@ public class GamePanel extends JPanel implements ActionListener, MouseListener {
 	g.drawImage(bg1, 0, 0, Gungailonline.WIDTH, Gungailonline.HEIGHT, null);
 	object.draw(g);
 	sniper.draw(g);
+	enemy.draw(g);
 	}
 	@Override
 	public void actionPerformed(ActionEvent e) {
