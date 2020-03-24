@@ -1,13 +1,12 @@
 import java.awt.Graphics;
-import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-
 import javax.imageio.ImageIO;
 
 public class Sniper extends gameObject {
 	BufferedImage weapon;
 	BufferedImage guy;
+
 	Sniper(int x, int y, int width, int height) {
 		super(x, y, width, height);
 		try {

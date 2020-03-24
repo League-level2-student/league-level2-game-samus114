@@ -13,18 +13,26 @@ public class ObjectManager {
 		int height5 = rand.nextInt(300)+300;
 		this.sniper = sniper;
 		backg = new ArrayList <Buildings> ();
-		backg.add(new Buildings(700, 829 - height, 150, height, false));
-		backg.add(new Buildings(500, 829 - height2, 150, height2, false));
+		enemy = new ArrayList <Enemy> ();
+		backg.add(new Buildings(500, 829 - height, 150, height, false));
+		enemy.add(new Enemy(500, 829 - height - 75, 80, 80));
+		backg.add(new Buildings(700, 829 - height2, 150, height2, false));
+		enemy.add(new Enemy(700, 829 - height2 - 75, 80, 80));
 		backg.add(new Buildings(900, 829 - height3, 150, height3, false));
+		enemy.add(new Enemy(900, 829 - height3 - 75, 80, 80));
 		backg.add(new Buildings(1100, 829 - height4, 150, height4, false));
+		enemy.add(new Enemy(1100, 829 - height4 - 75, 80, 80));
 		backg.add(new Buildings(1300, 829 - height5, 150, height5, false));
+		enemy.add(new Enemy(1300, 829 - height5 - 75, 80, 80));
 		backg.add(new Buildings(10, 100, 400, 700, true));
 	}
 	ArrayList<Buildings> backg;
+	ArrayList<Enemy> enemy;
 	void draw(Graphics g) {
-		
 		for (int i = 0; i < backg.size(); i++) {
 			backg.get(i).draw(g);
+		} for (int i = 0; i < enemy.size(); i++) {
+			enemy.get(i).draw(g);
 		}
 	}
 }

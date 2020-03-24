@@ -18,6 +18,7 @@ public class Gungailonline{
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);
 		frame.addMouseListener(panel);
+		frame.addMouseMotionListener(panel);
 		//b.pack();
 	}
 }
