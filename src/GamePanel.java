@@ -1,6 +1,8 @@
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.MouseInfo;
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -46,7 +48,9 @@ public class GamePanel extends JPanel implements ActionListener, MouseListener, 
 	object.draw(g);
 	sniper.draw(g);
 	g.setColor(Color.RED);
-	g.drawLine(430, 60, laserX/2, (laserY-25)/2);
+	Point laser = MouseInfo.getPointerInfo().getLocation();
+	g.drawLine(430, 60, laser.x-5, laser.y-25);
+	object.update();
 	}
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -55,7 +59,11 @@ public class GamePanel extends JPanel implements ActionListener, MouseListener, 
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		// TODO Auto-generated method stub
-		System.out.println(e.getX() + " " + e.getY());
+		int x = e.getX() - 15;
+		int y = e.getY() - 35;
+		int diffX= (x * x) / 430;
+		int diffY = (y * y) / 60;
+		object.addBullet(new Bullet(430, 60, x, y));
 	}
 	@Override
 	public void mousePressed(MouseEvent e) {
@@ -85,8 +93,6 @@ public class GamePanel extends JPanel implements ActionListener, MouseListener, 
 	@Override
 	public void mouseMoved(MouseEvent e) {
 		// TODO Auto-generated method stub
-		laserX = e.getX();
-		laserY = e.getY();
 	
 	}
 }

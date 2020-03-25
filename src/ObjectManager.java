@@ -14,6 +14,7 @@ public class ObjectManager {
 		this.sniper = sniper;
 		backg = new ArrayList <Buildings> ();
 		enemy = new ArrayList <Enemy> ();
+		bullets = new ArrayList <Bullet> ();
 		backg.add(new Buildings(500, 829 - height, 150, height, false));
 		enemy.add(new Enemy(500, 829 - height - 75, 80, 80));
 		backg.add(new Buildings(700, 829 - height2, 150, height2, false));
@@ -28,11 +29,23 @@ public class ObjectManager {
 	}
 	ArrayList<Buildings> backg;
 	ArrayList<Enemy> enemy;
+	ArrayList<Bullet> bullets;
 	void draw(Graphics g) {
 		for (int i = 0; i < backg.size(); i++) {
 			backg.get(i).draw(g);
 		} for (int i = 0; i < enemy.size(); i++) {
 			enemy.get(i).draw(g);
 		}
+		for (int i = 0; i < bullets.size(); i++) {
+			bullets.get(i).draw(g);
+		}
+	}
+	void update(){
+		for (int i = 0; i < bullets.size(); i++) {
+			bullets.get(i).update();
+		}
+	}
+	public void addBullet(Bullet bullet) {
+		bullets.add(bullet);
 	}
 }
