@@ -5,7 +5,6 @@ import javax.imageio.ImageIO;
 
 public class Enemy extends gameObject {
 	BufferedImage enemy;
-
 	Enemy(int x, int y, int width, int height) {
 		super(x, y, width, height);
 
@@ -19,5 +18,8 @@ public class Enemy extends gameObject {
 
 	public void draw(Graphics g) {
 		g.drawImage(enemy, x, y, width, height, null);
+	}
+	public void update() {
+		super.update();
 	}
 }

@@ -22,4 +22,5 @@ public class Sniper extends gameObject {
 		g.drawImage(guy, 339, 4, 150, 150, null);
 		g.drawImage(weapon, x, y, width, height, null);
 	}
+	
 }

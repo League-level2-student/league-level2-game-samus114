@@ -40,7 +40,6 @@ public class GamePanel extends JPanel implements ActionListener, MouseListener, 
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
 	}
 	@Override
 	public void paintComponent(Graphics g) {
@@ -49,8 +48,11 @@ public class GamePanel extends JPanel implements ActionListener, MouseListener, 
 	sniper.draw(g);
 	g.setColor(Color.RED);
 	Point laser = MouseInfo.getPointerInfo().getLocation();
-	g.drawLine(430, 60, laser.x-5, laser.y-25);
+	g.drawLine(430, 60, getMiddle(430, laser.x-5), getMiddle(60, laser.y-25));
 	object.update();
+	}
+	int getMiddle(int x1, int x2){
+	    return ( x1 + ( ( x2 - x1 ) / 2 ) );
 	}
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -61,38 +63,32 @@ public class GamePanel extends JPanel implements ActionListener, MouseListener, 
 		// TODO Auto-generated method stub
 		int x = e.getX() - 15;
 		int y = e.getY() - 35;
-		int diffX= (x * x) / 430;
-		int diffY = (y * y) / 60;
-		object.addBullet(new Bullet(430, 60, x, y));
+		int diffX = x - 430;
+		int diffY = y - 60;
+		object.addBullet(new Bullet(430, 60, Math.atan2(diffY, diffX)));
 	}
 	@Override
 	public void mousePressed(MouseEvent e) {
 		// TODO Auto-generated method stub
-		
 	}
 	@Override
 	public void mouseReleased(MouseEvent e) {
 		// TODO Auto-generated method stub
-		
 	}
 	@Override
 	public void mouseEntered(MouseEvent e) {
 		// TODO Auto-generated method stub
-		
 	}
 	@Override
 	public void mouseExited(MouseEvent e) {
 		// TODO Auto-generated method stub
-		
 	}
 	@Override
 	public void mouseDragged(MouseEvent e) {
 		// TODO Auto-generated method stub
-		
 	}
 	@Override
 	public void mouseMoved(MouseEvent e) {
 		// TODO Auto-generated method stub
-	
 	}
 }
