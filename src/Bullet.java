@@ -7,7 +7,7 @@ import javax.imageio.ImageIO;
 public class Bullet extends gameObject {
 	BufferedImage bullet;
 	double tanAngleRad = 0.0;
-	int bulletSpeed = 100;
+	int bulletSpeed = 10;
 	Bullet(int x, int y, double tanAngleRad) {
 		super(x, y, 20, 20);
 		try {
@@ -22,6 +22,7 @@ public class Bullet extends gameObject {
 		g.drawImage(bullet, x, y, width, height, null);
 	}
 	void update() {
+		super.update();
         x += Math.cos(tanAngleRad) * bulletSpeed;
         y += Math.sin(tanAngleRad) * bulletSpeed;
 	}
