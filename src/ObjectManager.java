@@ -9,13 +9,18 @@ import javax.swing.Timer;
 public class ObjectManager implements ActionListener {
 	Sniper sniper;
 	Timer fireRate;
+	int height;
+	int height2;
+	int height3;
+	int height4;
+	int height5;
 	ObjectManager(Sniper sniper) {
 		Random rand = new Random();
-		int height = rand.nextInt(300) + 300;
-		int height2 = rand.nextInt(300) + 300;
-		int height3 = rand.nextInt(300) + 300;
-		int height4 = rand.nextInt(300) + 300;
-		int height5 = rand.nextInt(300) + 300;
+		height = rand.nextInt(300) + 300;
+		height2 = rand.nextInt(300) + 300;
+		height3 = rand.nextInt(300) + 300;
+		height4 = rand.nextInt(300) + 300;
+		height5 = rand.nextInt(300) + 300;
 		this.sniper = sniper;
 		fireRate = new Timer(10000, this);
 		fireRate.start();
@@ -107,6 +112,11 @@ public class ObjectManager implements ActionListener {
 		}
 		fireRate = new Timer(5000, this);
 		fireRate.start();
-		enemyProjectiles.add(new Bullet(430, 60, 100));
+		enemyProjectiles.add(new Bullet(500, 829 - height - 75, 400));
+		enemyProjectiles.add(new Bullet(700, 829 - height2 - 75, 425));
+		enemyProjectiles.add(new Bullet(900, 829 - height3 - 75, 500));
+		enemyProjectiles.add(new Bullet(1100, 829 - height4 - 75, 550));
+		enemyProjectiles.add(new Bullet(1300, 829 - height5 - 75, 600));
+		
 	}
 }
