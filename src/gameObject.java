@@ -19,6 +19,10 @@ public class gameObject {
 	}
 
 	void update() {
-		collisionBox.setBounds(x, y, width, height);
-	}
+		if (x >= Gungailonline.WIDTH || y >= Gungailonline.HEIGHT) {
+			isActive = false;
+		} else {
+			collisionBox.setBounds(x, y, width, height);
+		}
+		}
 }
