@@ -6,7 +6,7 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.Timer;
 
-public class Enemy extends gameObject implements ActionListener{
+public class Enemy extends gameObject {
 	BufferedImage enemy;
 
 	
@@ -21,6 +21,7 @@ public class Enemy extends gameObject implements ActionListener{
 	}
 
 	public void draw(Graphics g) {
+		super.draw(g);
 		g.drawImage(enemy, x, y, width, height, null);
 	}
 	public void update() {

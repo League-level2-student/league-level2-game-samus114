@@ -14,6 +14,7 @@ public class ObjectManager implements ActionListener {
 	int height3;
 	int height4;
 	int height5;
+	boolean isOver = false;
 	ObjectManager(Sniper sniper) {
 		Random rand = new Random();
 		height = rand.nextInt(300) + 300;
@@ -59,7 +60,6 @@ public class ObjectManager implements ActionListener {
 			enemyProjectiles.get(i).draw(g);
 		}
 	}
-
 	void update() {
 		for (int i = 0; i < bullets.size(); i++) {
 			bullets.get(i).update();
@@ -69,7 +69,9 @@ public class ObjectManager implements ActionListener {
 		}
 		checkCollision();
 		purgeObjects();
-		
+		if (!sniper.isActive || enemy.isEmpty()) {
+			isOver = true;
+		}
 	}
 
 	public void addBullet(Bullet bullet) {
@@ -91,15 +93,18 @@ public class ObjectManager implements ActionListener {
 		}
 	}
 	void checkCollision() {
-		for (int i = 0; i < enemy.size(); i++) {
-			if (enemy.get(i).collisionBox.intersects(sniper.collisionBox)) {
+		for (int i = 0; i < enemyProjectiles.size(); i++) {
+			if (enemyProjectiles.get(i).collisionBox.intersects(sniper.collisionBox)) {
 				sniper.isActive = false;
+				enemyProjectiles.get(i).isActive = false;
 			}
-			for (int j = 0; j < bullets.size(); j++) {
+		}
+		for (int j = 0; j < bullets.size(); j++) {
+			for (int i = 0; i < enemy.size(); i++) {
 				if (bullets.get(j).collisionBox.intersects(enemy.get(i).collisionBox)) {
-				enemy.get(i).isActive = false;
-					bullets.get(j).isActive = false;
-				}
+					enemy.get(i).isActive = false;
+						bullets.get(j).isActive = false;
+					}
 			}
 		}
 	}
@@ -107,11 +112,7 @@ public class ObjectManager implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
 		for (int i = 0; i < enemy.size(); i++) {
-			int eBulletX = enemy.get(i).x;
-			int eBulletY = enemy.get(i).y;
 		}
-		fireRate = new Timer(5000, this);
-		fireRate.start();
 		enemyProjectiles.add(new Bullet(500, 829 - height - 75, 400));
 		enemyProjectiles.add(new Bullet(700, 829 - height2 - 75, 425));
 		enemyProjectiles.add(new Bullet(900, 829 - height3 - 75, 500));

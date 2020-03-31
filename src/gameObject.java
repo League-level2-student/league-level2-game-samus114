@@ -1,3 +1,5 @@
+import java.awt.Color;
+import java.awt.Graphics;
 import java.awt.Rectangle;
 
 public class gameObject {
@@ -16,6 +18,11 @@ public class gameObject {
 		this.height = height;
 		this.speed = 10;
 		collisionBox = new Rectangle(x, y, width, height);
+	}
+	
+	void draw(Graphics g) {
+		g.setColor(Color.RED);
+		g.drawRect(collisionBox.x, collisionBox.y, collisionBox.width, collisionBox.height);
 	}
 
 	void update() {

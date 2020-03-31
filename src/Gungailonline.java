@@ -19,6 +19,7 @@ public class Gungailonline{
 		frame.setVisible(true);
 		frame.addMouseListener(panel);
 		frame.addMouseMotionListener(panel);
+		frame.addKeyListener(panel);
 		//b.pack();
 	}
 }

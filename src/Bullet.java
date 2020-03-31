@@ -19,11 +19,12 @@ public class Bullet extends gameObject {
 		this.tanAngleRad = tanAngleRad;
 	}
 	public void draw(Graphics g) {
+		super.draw(g);
 		g.drawImage(bullet, x, y, width, height, null);
 	}
 	void update() {
-		super.update();
         x += Math.cos(tanAngleRad) * bulletSpeed;
         y += Math.sin(tanAngleRad) * bulletSpeed;
+		super.update();
 	}
 }

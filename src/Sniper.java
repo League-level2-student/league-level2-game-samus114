@@ -15,13 +15,14 @@ public class Sniper extends gameObject {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		collisionBox.setBounds(339, 25, 50, 50);
 	}
 
 	public void draw(Graphics g) {
+		super.draw(g);
 		g.drawImage(guy, 339, 4, 150, 150, null);
 		g.drawImage(weapon, x, y, width, height, null);
 	}
 	public void update() {
-		super.update();
 	}
 }
