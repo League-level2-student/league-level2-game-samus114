@@ -97,19 +97,19 @@ public class GamePanel extends JPanel implements ActionListener, MouseListener, 
 			g.fillRect(0, 0, Gungailonline.WIDTH, Gungailonline.HEIGHT);
 			g.setColor(Color.YELLOW);
 			g.setFont(titleFont);
-			g.drawString("GOOD JOB!!!", 100, 100);
+			g.drawString("GOOD JOB!!!", 615, 100);
 			g.setFont(subFont);
-			g.drawString("You have won", 110, 200);
-			g.drawString("Press ENTER to restart", 90, 400);
+			g.drawString("You have won", 675, 200);
+			g.drawString("Press ENTER to restart",625, 400);
 		} else {
 			g.setColor(Color.RED);
 			g.fillRect(0, 0, Gungailonline.WIDTH, Gungailonline.HEIGHT);
 			g.setColor(Color.YELLOW);
 			g.setFont(titleFont);
-			g.drawString("GAME OVER", 100, 100);
+			g.drawString("GAME OVER",615, 100);
 			g.setFont(subFont);
-			g.drawString("You have DIED", 110, 200);
-			g.drawString("Press ENTER to restart", 90, 400);
+			g.drawString("You have DIED", 675, 200);
+			g.drawString("Press ENTER to restart", 625, 400);
 		}
 		repaint();
 	}
