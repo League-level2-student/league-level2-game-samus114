@@ -20,7 +20,7 @@ public class Sniper extends gameObject {
 
 	public void draw(Graphics g) {
 		super.draw(g);
-		g.drawImage(guy, 339, 4, 150, 150, null);
+	g.drawImage(guy, 339, 4, 150, 150, null);
 		g.drawImage(weapon, x, y, width, height, null);
 	}
 	public void update() {

@@ -15,15 +15,15 @@ public class ObjectManager implements ActionListener {
 	int height4;
 	int height5;
 	boolean isOver = false;
+	Random rand = new Random();
 	ObjectManager(Sniper sniper) {
-		Random rand = new Random();
 		height = rand.nextInt(300) + 300;
 		height2 = rand.nextInt(300) + 300;
 		height3 = rand.nextInt(300) + 300;
 		height4 = rand.nextInt(300) + 300;
 		height5 = rand.nextInt(300) + 300;
 		this.sniper = sniper;
-		fireRate = new Timer(1000, this);
+		fireRate = new Timer(10000, this);
 		fireRate.start();
 		backg = new ArrayList<Buildings>();
 		enemy = new ArrayList<Enemy>();
@@ -100,6 +100,13 @@ public class ObjectManager implements ActionListener {
 			}
 		}
 		for (int j = 0; j < bullets.size(); j++) {
+			for (int i = 0; i < backg.size(); i++) {
+				if (backg.get(i).collisionBox.intersects(bullets.get(j).collisionBox)) {
+					int newX = rand.nextInt(50)-25;
+					int newY = rand.nextInt(50)-25;
+					bullets.get(j).changeDirectory(newX, newY);
+				}
+			}
 			for (int i = 0; i < enemy.size(); i++) {
 				if (bullets.get(j).collisionBox.intersects(enemy.get(i).collisionBox)) {
 					enemy.get(i).isActive = false;
@@ -111,22 +118,21 @@ public class ObjectManager implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
-		for (int i = 0; i < enemy.size(); i++) {
-		}
-		int diffX = 0 - 500;
-		int diffY = 0 - 829 - height - 75;
-		enemyProjectiles.add(new Bullet(500, 829 - height - 75, Math.atan2(diffY, -diffX)));
-		diffX = 0 - 700;
-		diffY = 0 - 829 - height2 - 75;
-		enemyProjectiles.add(new Bullet(700, 829 - height2 - 75, Math.atan2(diffY, -diffX)));
-		diffX = 0 - 900;
-		diffY = 0 - 829 - height3 - 75;
+		int r = rand.nextInt(50)-25;
+		int diffX = sniper.x - 500;
+		int diffY = sniper.y - (829 - height - 75 - r);
+		enemyProjectiles.add(new Bullet(500, 829 - height - 75, Math.atan2(diffY, diffX)));
+		diffX = sniper.x - 700;
+		diffY = sniper.y - (829 - height2 - 75 - r);
+		enemyProjectiles.add(new Bullet(700, 829 - height2 - 75, Math.atan2(diffY, diffX)));
+		diffX = sniper.x - 900;
+		diffY = sniper.y - (829 - height3 - 75 - r);
 		enemyProjectiles.add(new Bullet(900, 829 - height3 - 75, Math.atan2(diffY, -diffX)));
-		diffX = 0 - 1100;
-		diffY = 0 - 829 - height4 - 75;
+		diffX = sniper.x - 1100;
+		diffY = sniper.y - (829 - height4 - 75 - r);
 		enemyProjectiles.add(new Bullet(1100, 829 - height4 - 75, Math.atan2(diffY, -diffX)));
-		diffX = 0 - 1300;
-		diffY = 0 - 829 - height5 - 75;
+		diffX = sniper.x - 1300;
+		diffY = sniper.y - (829 - height5 - 75 - r);
 		enemyProjectiles.add(new Bullet(1300, 829 - height5 - 75, Math.atan2(diffY, -diffX)));
 	}
 }

@@ -27,4 +27,7 @@ public class Bullet extends gameObject {
         y += Math.sin(tanAngleRad) * bulletSpeed;
 		super.update();
 	}
+public void changeDirectory(int x, int y) {
+	tanAngleRad = Math.atan2(y - this.y, x - this.x);
+}
 }
