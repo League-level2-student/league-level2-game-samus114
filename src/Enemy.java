@@ -8,10 +8,14 @@ import javax.swing.Timer;
 
 public class Enemy extends gameObject {
 	BufferedImage enemy;
-
-	
-	Enemy(int x, int y, int width, int height) {
+	int tallness;
+	 int ys;
+	 int xs;
+	Enemy(int x, int y, int width, int height, int tallness, int xs,int ys) {
 		super(x, y, width, height);
+		this.tallness = tallness;
+		this.ys = ys;
+		this.xs = xs;
 		try {
 			enemy = ImageIO.read(this.getClass().getResourceAsStream("enemy.png"));
 		} catch (IOException e) {

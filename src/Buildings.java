@@ -6,6 +6,7 @@ public class Buildings extends gameObject {
 	Buildings(int x, int y, int width, int height, boolean hasroof) {
 		super(x, y, width, height);
 		this.hasroof = hasroof;
+		
 	}
 	void draw(Graphics g){
 		g.drawRect(x, y, width, height);
