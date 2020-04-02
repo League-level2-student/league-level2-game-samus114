@@ -88,7 +88,7 @@ public class GamePanel extends JPanel implements ActionListener, MouseListener, 
 		int y = e.getY() - 35;
 		int diffX = x - 430;
 		int diffY = y - 60;
-		object.addBullet(new Bullet(430, 60, Math.atan2(diffY, diffX)));
+		object.addBullet(new Bullet(430, 60, Math.atan2(diffY, diffX), false, 40, 40, 300));
 	}
 
 	void drawEndState(Graphics g) {

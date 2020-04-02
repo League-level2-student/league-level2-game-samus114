@@ -1,6 +1,9 @@
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.geom.AffineTransform;
+import java.awt.image.AffineTransformOp;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -104,7 +107,8 @@ public class ObjectManager implements ActionListener {
 				if (backg.get(i).collisionBox.intersects(bullets.get(j).collisionBox)) {
 					int newX = rand.nextInt(250)-125;
 					int newY = rand.nextInt(250)-125;
-					bullets.get(j).changeDirectory(newX, newY);
+					bullets.get(j).changeTrajectory(newX, newY);
+					bullets.get(j).bullet = bullets.get(j).bulletLeft;
 				}
 			}
 			for (int i = 0; i < enemy.size(); i++) {
@@ -122,7 +126,7 @@ public class ObjectManager implements ActionListener {
 		int r = rand.nextInt(50)-25;
 		int diffX = sniper.x - enemy.get(i).xs;
 		int diffY = sniper.y - (enemy.get(i).ys - enemy.get(i).tallness - 75 - r);
-			enemyProjectiles.add(new Bullet(enemy.get(i).xs, enemy.get(i).ys - enemy.get(i).tallness - 75, Math.atan2(diffY, diffX)));
+			enemyProjectiles.add(new Bullet(enemy.get(i).xs, enemy.get(i).ys - enemy.get(i).tallness - 75, Math.atan2(diffY, diffX), true, 20, 20, 20));
 			/*
 			r = rand.nextInt(50)-25;
 			diffX = sniper.x - 700;
