@@ -50,26 +50,31 @@ public class GamePanel extends JPanel implements ActionListener, MouseListener, 
 		frameDraw = new Timer(1000 / 60, this);
 		frameDraw.start();
 		object = new ObjectManager(sniper);
-		currentState = GAME;
+		currentState = MENU;
 	}
 
 	@Override
 	public void paintComponent(Graphics g) {
-		if (currentState != END) {
+		if (currentState == GAME) {
 			g.drawImage(bg1, 0, 0, Gungailonline.WIDTH, Gungailonline.HEIGHT, null);
 			object.draw(g);
 			sniper.draw(g);
 			g.setColor(Color.RED);
 			Point laser = MouseInfo.getPointerInfo().getLocation();
+			if (!sniper.drawSword) {
 			g.drawLine(430, 60, getMiddle(430, laser.x - 5), getMiddle(60, laser.y - 25));
+			}
 			object.update();
 			if (object.isOver) {
 				currentState = END;
 			}
+		} else if (currentState == MENU) {
+			drawMenuState(g);
 		} else {
 			drawEndState(g);
 			frameDraw.stop();
 		}
+
 	}
 
 	int getMiddle(int x1, int x2) {
@@ -88,7 +93,23 @@ public class GamePanel extends JPanel implements ActionListener, MouseListener, 
 		int y = e.getY() - 35;
 		int diffX = x - 430;
 		int diffY = y - 60;
-		object.addBullet(new Bullet(430, 60, Math.atan2(diffY, diffX), false, 40, 40, 300));
+		if (!sniper.drawSword) {
+			if (sniper.bulletsLeft > 0) {
+				object.addBullet(new Bullet(430, 60, Math.atan2(diffY, diffX), false, 40, 40, 300));
+				sniper.bulletsLeft--;
+			}
+		}
+	}
+
+	void drawMenuState(Graphics g) {
+		g.setColor(Color.BLUE);
+		g.fillRect(0, 0, Gungailonline.WIDTH, Gungailonline.HEIGHT);
+		g.setFont(titleFont);
+		g.setColor(Color.YELLOW);
+		g.drawString("Gun Gail Online", 25, 100);
+		g.setFont(subFont);
+		g.drawString("Press ENTER to start", 100, 300);
+		g.drawString("Press SPACE for instructions", 50, 400);
 	}
 
 	void drawEndState(Graphics g) {
@@ -100,13 +121,13 @@ public class GamePanel extends JPanel implements ActionListener, MouseListener, 
 			g.drawString("GOOD JOB!!!", 615, 100);
 			g.setFont(subFont);
 			g.drawString("You have won", 675, 200);
-			g.drawString("Press ENTER to restart",625, 400);
+			g.drawString("Press ENTER to restart", 625, 400);
 		} else {
 			g.setColor(Color.RED);
 			g.fillRect(0, 0, Gungailonline.WIDTH, Gungailonline.HEIGHT);
 			g.setColor(Color.YELLOW);
 			g.setFont(titleFont);
-			g.drawString("GAME OVER",615, 100);
+			g.drawString("GAME OVER", 615, 100);
 			g.setFont(subFont);
 			g.drawString("You have DIED", 675, 200);
 			g.drawString("Press ENTER to restart", 625, 400);
@@ -154,15 +175,20 @@ public class GamePanel extends JPanel implements ActionListener, MouseListener, 
 	public void keyPressed(KeyEvent e) {
 		// TODO Auto-generated method stub
 		if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-			if (currentState == END) {
+			if (currentState == MENU) {
 				startGameState();
 			}
+		}
+		if (e.getKeyCode() == KeyEvent.VK_S) {
+			sniper.drawSword = true;
 		}
 	}
 
 	@Override
 	public void keyReleased(KeyEvent e) {
 		// TODO Auto-generated method stub
-
+		if (e.getKeyCode() == KeyEvent.VK_S) {
+			sniper.drawSword = false;
+		}
 	}
 }

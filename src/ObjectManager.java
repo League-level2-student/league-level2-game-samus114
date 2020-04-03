@@ -97,20 +97,44 @@ public class ObjectManager implements ActionListener {
 	}
 	void checkCollision() {
 		for (int i = 0; i < enemyProjectiles.size(); i++) {
+		if (enemyProjectiles.get(i).isActive) {
 			if (enemyProjectiles.get(i).collisionBox.intersects(sniper.collisionBox)) {
-				sniper.isActive = false;
+				sniper.isHit();
 				enemyProjectiles.get(i).isActive = false;
 			}
 		}
+		}
 		for (int j = 0; j < bullets.size(); j++) {
-			for (int i = 0; i < backg.size(); i++) {
-				if (backg.get(i).collisionBox.intersects(bullets.get(j).collisionBox)) {
-					int newX = rand.nextInt(250)-125;
-					int newY = rand.nextInt(250)-125;
-					bullets.get(j).changeTrajectory(newX, newY);
-					bullets.get(j).bullet = bullets.get(j).bulletLeft;
-				}
-			}
+            boolean clearBulletCollision = true;
+            
+            for (int i = 0; i < backg.size(); i++) {
+                Buildings building = backg.get( i );
+                Bullet bullet = bullets.get( j );
+                
+                if( bullet.collisionBox.intersects( building.collisionBox ) ) {
+                    clearBulletCollision = false;
+                    
+                    // Bullet currently NOT colliding with a building
+                    if( !bullet.buildingCollision ) {
+                        bullet.buildingCollision = true;
+                    
+                        // Collision with top of building, switch Y direction
+                        if( (bullet.y + bullet.height) <= (building.y + bullet.bulletSpeed) ) {
+                            bullet.changeYTrajectory();
+                        
+                         // Collision with left OR right side of building, switch X direction
+                        } else {
+                        	 bullet.changeXTrajectory();
+                        }
+                    }
+                }
+            }
+            
+            // Bullet is not colliding with any of the buildings
+            if( clearBulletCollision ) {
+                bullets.get( j ).buildingCollision = false;
+            }
+
 			for (int i = 0; i < enemy.size(); i++) {
 				if (bullets.get(j).collisionBox.intersects(enemy.get(i).collisionBox)) {
 					enemy.get(i).isActive = false;

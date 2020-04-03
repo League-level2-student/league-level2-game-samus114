@@ -17,6 +17,7 @@ public class Bullet extends gameObject {
 	boolean hasSW = false;
 	Random rand = new Random();
 	int rotationDegrees = 0;
+	boolean buildingCollision = false;
 	Bullet(int x, int y, double tanAngleRad, boolean hasSW, int width, int height, int bulletSpeed) {
 		super(x, y, width, height);
 		try {
@@ -43,27 +44,13 @@ public class Bullet extends gameObject {
 
 	void update() {
 		if (x >= Gungailonline.WIDTH - 95) {
-			int newX = rand.nextInt(300) - 125;
-			int newY = rand.nextInt(300) - 125;
-			changeTrajectory(newX, newY);
-			bullet = bulletLeft;
-		} else if (y >= Gungailonline.HEIGHT - 15) {
-			int newX = rand.nextInt(250) - 125;
-			int newY = rand.nextInt(250) - 125;
-			changeTrajectory(newX, newY);
+			changeXTrajectory();
 		} else if (y <= 0) {
-			tanAngleRadY = - tanAngleRadY;
-			rotationDegrees = 45;
-			bullet = rotateImage(bullet, rotationDegrees);
+			changeYTrajectory();
 		}
 		x += Math.cos(tanAngleRadX) * bulletSpeed;
 		y += Math.sin(tanAngleRadY) * bulletSpeed;
 		super.update();
-	}
-
-	public void changeTrajectory(int x, int y) {
-		tanAngleRadX = Math.atan2(y - this.y, x - this.x);
-		tanAngleRadY = Math.atan2(this.y - y, x - this.x);
 	}
 	public BufferedImage rotateImage( BufferedImage image, int rotationDeg ) {
         double rotationRad = Math.toRadians(rotationDeg);
@@ -75,4 +62,18 @@ public class Bullet extends gameObject {
 
         return op.filter(image, null);
     }
+    public void changeXTrajectory() {
+        tanAngleRadX = Math.PI - tanAngleRadX;
+        
+        if( bullet == bulletRight ) {
+            bullet = bulletLeft;
+        } else {
+            bullet = bulletRight;
+        }
+    }
+
+    public void changeYTrajectory() {
+        tanAngleRadY = -tanAngleRadY;
+    }
+
 }
