@@ -50,11 +50,12 @@ public class GamePanel extends JPanel implements ActionListener, MouseListener, 
 		frameDraw = new Timer(1000 / 60, this);
 		frameDraw.start();
 		object = new ObjectManager(sniper);
-		currentState = MENU;
+		currentState = GAME;
 	}
 
 	@Override
 	public void paintComponent(Graphics g) {
+		
 		if (currentState == GAME) {
 			g.drawImage(bg1, 0, 0, Gungailonline.WIDTH, Gungailonline.HEIGHT, null);
 			object.draw(g);
@@ -62,7 +63,7 @@ public class GamePanel extends JPanel implements ActionListener, MouseListener, 
 			g.setColor(Color.RED);
 			Point laser = MouseInfo.getPointerInfo().getLocation();
 			if (!sniper.drawSword) {
-			g.drawLine(430, 60, getMiddle(430, laser.x - 5), getMiddle(60, laser.y - 25));
+				g.drawLine(430, 60, getMiddle(430, laser.x - 5), getMiddle(60, laser.y - 25));
 			}
 			object.update();
 			if (object.isOver) {
@@ -132,6 +133,7 @@ public class GamePanel extends JPanel implements ActionListener, MouseListener, 
 			g.drawString("You have DIED", 675, 200);
 			g.drawString("Press ENTER to restart", 625, 400);
 		}
+		
 		repaint();
 	}
 
@@ -175,8 +177,13 @@ public class GamePanel extends JPanel implements ActionListener, MouseListener, 
 	public void keyPressed(KeyEvent e) {
 		// TODO Auto-generated method stub
 		if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+			
 			if (currentState == MENU) {
 				startGameState();
+				currentState = GAME;
+			} else if (currentState == END) {
+				repaint();
+				currentState = MENU;
 			}
 		}
 		if (e.getKeyCode() == KeyEvent.VK_S) {
