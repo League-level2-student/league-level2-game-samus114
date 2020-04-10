@@ -65,7 +65,7 @@ public class GamePanel extends JPanel implements ActionListener, MouseListener, 
 			g.drawImage(sniper.sniperSword, 1375, 10, 100, 100, null);
 			g.drawString("" + sniper.swordLife + " blocks left", 1230, 50);
 			g.setColor(Color.CYAN);
-			g.drawString("" + sniper.bulletsLeft + " bullets left", 1220, 120);
+g.drawString("" + sniper.bulletsLeft + " bullets left", 1220, 120);
 			g.drawImage(sniper.weapon, 1400, 80, 74, 37, null);
 			if (!sniper.drawSword) {
 				g.setColor(Color.RED);
