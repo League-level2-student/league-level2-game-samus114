@@ -10,6 +10,7 @@ import java.util.Random;
 import javax.swing.Timer;
 
 public class ObjectManager implements ActionListener {
+	car car;
 	Sniper sniper;
 	Timer fireRate;
 	int height;
@@ -17,7 +18,8 @@ public class ObjectManager implements ActionListener {
 	int height3;
 	int height4;
 	int height5;
-	boolean isOver = false;
+	boolean isSniperOver = false;
+	boolean isEnemyOver = false;
 	Random rand = new Random();
 	int score = 0;
 
@@ -77,8 +79,11 @@ public class ObjectManager implements ActionListener {
 		}
 		checkCollision();
 		purgeObjects();
-		if (!sniper.isActive || enemy.isEmpty()) {
-			isOver = true;
+		if (!sniper.isActive) {
+			isSniperOver = true;
+		}
+		if (enemy.isEmpty()) {
+			isEnemyOver = true;
 		}
 	}
 
