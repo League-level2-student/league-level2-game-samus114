@@ -17,7 +17,7 @@ import javax.swing.JPanel;
 import javax.swing.Timer;
 
 public class GamePanel extends JPanel implements ActionListener, MouseListener, MouseMotionListener, KeyListener {
-	car car = new car(200, 200, 20, 20);
+	car car = new car(70, 200, 100, 100);
 	Sniper sniper;
 	final int MENU = 0;
 	final int GAME = 1;
@@ -30,6 +30,7 @@ public class GamePanel extends JPanel implements ActionListener, MouseListener, 
 	Font titleFont = new Font("Arial", Font.PLAIN, 48);
 	Font subFont = new Font("Arial", Font.PLAIN, 26);
 	BufferedImage bg1;
+	BufferedImage backg2;
 	int laserX = 1600;
 	int laserY = 40;
 
@@ -40,6 +41,7 @@ public class GamePanel extends JPanel implements ActionListener, MouseListener, 
 		object = new ObjectManager(sniper);
 		try {
 			bg1 = ImageIO.read(this.getClass().getResourceAsStream("background.png"));
+			backg2 = ImageIO.read(this.getClass().getResourceAsStream("backg2.png"));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -76,7 +78,7 @@ public class GamePanel extends JPanel implements ActionListener, MouseListener, 
 			object.update();
 			if (object.isEnemyOver) {
 				currentState = GAME2;
-			} else if (object.isSniperOver) {
+			} else if (!object.sniper.isActive) {
 				currentState = END;
 			}
 		} else if (currentState == MENU) {
@@ -85,11 +87,9 @@ public class GamePanel extends JPanel implements ActionListener, MouseListener, 
 			drawInfoState(g);
 		} else if (currentState == GAME2) {
 			draw2GameState(g);
-		} else {
+		} else if (currentState == END) {
 			drawEndState(g);
-			frameDraw.stop();
 		}
-
 	}
 
 	int getMiddle(int x1, int x2) {
@@ -128,7 +128,16 @@ public class GamePanel extends JPanel implements ActionListener, MouseListener, 
 	}
 
 	void drawEndState(Graphics g) {
-		if (sniper.isActive) {
+		 if (!car.isActive) {
+			g.setColor(Color.RED);
+			g.fillRect(0, 0, Gungailonline.WIDTH, Gungailonline.HEIGHT);
+			g.setColor(Color.YELLOW);
+			g.setFont(titleFont);
+			g.drawString("GAME OVER", 615, 100);
+			g.setFont(subFont);
+			g.drawString("HAHAHA! YOU HAVE FALLEN FOR HASHANI'S DOOM TRAP!", 400, 200);
+			g.drawString("Press ENTER to restart", 625, 400);
+		} else if (sniper.isActive) {
 			g.setColor(Color.RED);
 			g.fillRect(0, 0, Gungailonline.WIDTH, Gungailonline.HEIGHT);
 			g.setColor(Color.YELLOW);
@@ -146,7 +155,7 @@ public class GamePanel extends JPanel implements ActionListener, MouseListener, 
 			g.drawString("GAME OVER", 615, 100);
 			g.setFont(subFont);
 			g.drawString("You have DIED, I THE IMMORTAL HISHANI HAVE KILLED YOU WITH MY HENCHMEN!", 275, 200);
-			
+
 			g.drawString("Press ENTER to restart", 625, 400);
 		}
 		repaint();
@@ -162,28 +171,24 @@ public class GamePanel extends JPanel implements ActionListener, MouseListener, 
 		g.drawString(
 				"The point of the game is to shoot all the enemys before they get you. You have 10 seconds till they fire",
 				205, 150);
-		g.drawString("Press s key to deflect bullets, shoot with trackpad or mouse.", 440, 250);
+		g.drawString("Press Q key to deflect bullets, shoot with trackpad or mouse.", 440, 250);
 		g.drawString("You can only block 5 bullets, you have 10 bullets left.", 470, 350);
 		g.drawString("The bullets also have the ability to bounce off the walls", 460, 450);
 		g.drawString("Hit space to return to menu screen", 580, 550);
 	}
 
 	void draw2GameState(Graphics g) {
-		g.setColor(Color.BLACK);
-		g.fillRect(0, 0, Gungailonline.WIDTH, Gungailonline.HEIGHT);
+		g.drawImage(backg2, 0, 0, Gungailonline.WIDTH, Gungailonline.HEIGHT, null);
 		g.setColor(Color.RED);
 		g.setFont(titleFont);
 		car.draw(g);
-		for (int i = 0; i < 100; i++) {
-			System.out.println(i);
-			if (i <= 99) {
-				g.drawString("YOU HAVE KILLED MY HENCHMEN!", 350, 50);
-				g.drawString("NOW YOU MUST PERISH BY MY WEAPON COME FACE ME.", 100, 100);
-			} else {
-				g.setColor(Color.WHITE);
-				g.fillRect(0, 0, Gungailonline.WIDTH, Gungailonline.HEIGHT);
-			}
-			
+		g.drawString("YOU HAVE KILLED MY HENCHMEN!", 350, 50);
+		g.drawString("NOW YOU MUST PERISH BY MY WEAPON COME FACE ME.", 100, 100);
+		int backg2c = backg2.getRGB(car.x, car.y);
+		System.out.println(car.x + " , " + car.y);
+		if (backg2c != -1) {
+			currentState = END;
+			car.isActive = false;
 		}
 	}
 
@@ -236,10 +241,10 @@ public class GamePanel extends JPanel implements ActionListener, MouseListener, 
 				currentState = MENU;
 			}
 		}
-		if (e.getKeyCode() == KeyEvent.VK_S) {
+		if (e.getKeyCode() == KeyEvent.VK_Q) {
 			sniper.drawSword = true;
 		}
-		if (e.getKeyCode() == KeyEvent.VK_SPACE) {
+		if (e.getKeyCode() == KeyEvent.VK_C) {
 			if (currentState == MENU) {
 				repaint();
 				currentState = INFO;
@@ -248,23 +253,36 @@ public class GamePanel extends JPanel implements ActionListener, MouseListener, 
 				currentState = MENU;
 			}
 		}
-		if(e.getKeyCode() == KeyEvent.VK_F) {
+		if (e.getKeyCode() == KeyEvent.VK_F) {
 			currentState = GAME2;
-		} else if (e.getKeyCode() == KeyEvent.VK_UP) {
+		}
+		if (e.getKeyCode() == KeyEvent.VK_UP && currentState == GAME2) {
 			car.up();
-		} else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
+		}
+		if (e.getKeyCode() == KeyEvent.VK_DOWN && currentState == GAME2) {
 			car.down();
-		} else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
+		}
+		if (e.getKeyCode() == KeyEvent.VK_LEFT && currentState == GAME2) {
 			car.left();
-		} else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+			System.out.println("left");
+		}
+		if (e.getKeyCode() == KeyEvent.VK_RIGHT && currentState == GAME2) {
 			car.right();
+		}
+		if (e.getKeyCode() == KeyEvent.VK_Q) {
+			if (!sniper.drawSword) {
+				if (sniper.bulletsLeft > 0) {
+					object.addBullet(new Bullet(car.x + 100, car.y + 10, 0, true, 20, 20, 10));
+					sniper.bulletsLeft--;
+				}
+			}
 		}
 	}
 
 	@Override
 	public void keyReleased(KeyEvent e) {
 		// TODO Auto-generated method stub
-		if (e.getKeyCode() == KeyEvent.VK_S) {
+		if (e.getKeyCode() == KeyEvent.VK_Q) {
 			sniper.drawSword = false;
 		}
 	}

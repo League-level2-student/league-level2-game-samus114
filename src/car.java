@@ -6,15 +6,25 @@ import javax.imageio.ImageIO;
 
 public class car extends gameObject {
 	BufferedImage weapon;
-	BufferedImage car;
+	BufferedImage carR;
+	BufferedImage carD;
+	BufferedImage carL;
+	BufferedImage carU;
 	BufferedImage sniperSword;
 	boolean drawSword = false;
+	boolean left = false;
+	boolean right = true;
+	boolean up = false;
+	boolean down = false;
 
 	car(int x, int y, int width, int height) {
 		super(x, y, width, height);
 		try {
 			weapon = ImageIO.read(this.getClass().getResourceAsStream("sniper.png"));
-			car = ImageIO.read(this.getClass().getResourceAsStream("Untitled.png"));
+			carR = ImageIO.read(this.getClass().getResourceAsStream("carR.png"));
+			carD = ImageIO.read(this.getClass().getResourceAsStream("carD.png"));
+			carL = ImageIO.read(this.getClass().getResourceAsStream("carL.png"));
+			carU = ImageIO.read(this.getClass().getResourceAsStream("carU.png"));
 			sniperSword = ImageIO.read(this.getClass().getResourceAsStream("sniperSword.png"));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -24,32 +34,60 @@ public class car extends gameObject {
 	}
 
 	public void up() {
-		y -= speed;
+		y -= 10;
+		up = true;
+		down = false;
+		left = false;
+		right = false;
 	}
 
 	public void down() {
-		y += speed;
+		y += 10;
+		down = true;
+		left = false;
+		right = false;
+		up = false;
 	}
 
 	public void left() {
-		x -= speed;
+		x -= 10;
+		left = true;
+		right = false;
+		up = false;
+		down = false;
+		System.out.println("left");
 	}
 
 	public void right() {
-		x += speed;
+		x += 10;
+		right = true;
+		up = false;
+		down = false;
+		left = false;
 	}
-	
+
 	public void draw(Graphics g) {
 		super.draw(g);
-		g.drawImage(car, 339, 200, 150, 150, null);
+		if (right) {
+			g.drawImage(carR, x - (width/2), y - (height/2), width - 20, height - 20, null);
+		}
+		if (left) {
+			g.drawImage(carL, x - (width/2), y - (height/2), width - 20, height - 20, null);
+		}
+		if (down) {
+			g.drawImage(carD, x - (width/2), y - (height/2), width - 20, height - 20, null);
+		}
+		if (up) {
+			g.drawImage(carU, x - (width/2), y - (height/2), width - 20, height - 20, null);
+			
+		}
 		if (drawSword) {
-			g.drawImage(sniperSword, 339, 18, 80, 80, null);
-		} else {
-			g.drawImage(weapon, x, y, width, height, null);
+			g.drawImage(sniperSword, 39, 1, 20, 20, null);
 		}
 	}
 
 	public void update() {
+		super.update();
 	}
 
 	public void isHit() {
@@ -63,5 +101,9 @@ public class car extends gameObject {
 		} else {
 			isActive = false;
 		}
+	}
+
+	public void shoot() {
+
 	}
 }
